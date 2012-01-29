@@ -3,7 +3,8 @@ namespace FrTrainSys
 {
 	public class Vacma: FrTrainDevice
 	{
-		public Vacma ()
+		public Vacma (TrainSoundManager soundManager,
+		              TrainHandleManager handleManager): base(soundManager, handleManager)
 		{
 		}
 	}
