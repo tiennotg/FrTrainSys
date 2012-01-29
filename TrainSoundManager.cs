@@ -11,10 +11,17 @@ namespace FrTrainSys
 		};
 
 		private OpenBveApi.Runtime.PlaySoundDelegate playSound;
+		private const double volume = 1.0;
+		private const double pitch = 1.0;
 
 		public TrainSoundManager (OpenBveApi.Runtime.PlaySoundDelegate playSound)
 		{
 			this.playSound = playSound;
+		}
+
+		public void playSoundOnce (int index)
+		{
+			playSound(index,volume,pitch,false);
 		}
 	}
 }
