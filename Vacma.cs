@@ -1,5 +1,5 @@
 using System;
-namespace Plugin
+namespace FrTrainSys
 {
 	public class Vacma: FrTrainDevice
 	{

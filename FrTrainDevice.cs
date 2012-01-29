@@ -1,5 +1,5 @@
 using System;
-namespace Plugin
+namespace FrTrainSys
 {
 	abstract public class FrTrainDevice
 	{
