@@ -1,6 +1,15 @@
 using System;
 namespace FrTrainSys
 {
+	public enum EventTypes
+	{
+		EventTypeKeyUp, EventTypeKeyDown,
+		EventTypeSwitchReverser, EventTypeChangePower,
+		EventTypeChangeBrake, EventTypeBlowHorn,
+		EventTypeChangeDoors, EventTypeChangeSignalAspect,
+		EventTypeGetBeacon
+	};
+
 	public class TrainEvent
 	{
 		private int eventType;
