@@ -11,6 +11,16 @@ namespace Plugin
 			this.eventType = eventType;
 			this.data = data;
 		}
+
+		public int getEventType ()
+		{
+			return this.eventType;
+		}
+
+		public void setEventType(int eventType)
+		{
+			this.eventType = eventType;
+		}
 	}
 }
 
