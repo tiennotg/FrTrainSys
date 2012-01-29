@@ -9,6 +9,11 @@ namespace FrTrainSys
 		{
 		}
 
+		private void beep ()
+		{
+			soundManager.playSoundOnce((int) TrainSoundManager.SoundIndex.Beep);
+		}
+
 		public override void elapse (OpenBveApi.Runtime.ElapseData data)
 		{
 		}
