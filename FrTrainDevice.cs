@@ -16,6 +16,8 @@ namespace FrTrainSys
 		}
 
 		public abstract void elapse (OpenBveApi.Runtime.ElapseData data);
+		public abstract void reset ();
+		public abstract void trainEvent (TrainEvent _event);
 	}
 }
 
