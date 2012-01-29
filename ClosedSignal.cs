@@ -1,7 +1,7 @@
 using System;
 namespace Plugin
 {
-	public class ClosedSignal
+	public class ClosedSignal: FrTrainDevice
 	{
 		public ClosedSignal ()
 		{
