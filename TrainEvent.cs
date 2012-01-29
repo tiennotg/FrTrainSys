@@ -3,7 +3,10 @@ namespace Plugin
 {
 	public class TrainEvent
 	{
-		public TrainEvent ()
+		private int eventType;
+		private int data;
+
+		public TrainEvent (int eventType, int data)
 		{
 		}
 	}
