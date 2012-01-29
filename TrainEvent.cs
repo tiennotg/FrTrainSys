@@ -8,6 +8,8 @@ namespace Plugin
 
 		public TrainEvent (int eventType, int data)
 		{
+			this.eventType = eventType;
+			this.data = data;
 		}
 	}
 }
