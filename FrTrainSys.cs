@@ -4,11 +4,14 @@ using OpenBveApi.Runtime;
 namespace FrTrainSys {
 	/// <summary>The interface to be implemented by the plugin.</summary>
 	public class FrTrainSys : IRuntime {
+
+		private TrainSoundManager soundManager;
 		
 		/// <summary>Is called when the plugin is loaded.</summary>
 		/// <param name="properties">The properties supplied to the plugin on loading.</param>
 		/// <returns>Whether the plugin was loaded successfully.</returns>
 		public bool Load(LoadProperties properties) {
+			soundManager = new TrainSoundManager(properties.PlaySound);
 			return true;
 		}
 		
