@@ -67,5 +67,6 @@
     <Compile Include="TrainEvent.cs" />
     <Compile Include="TrainSoundManager.cs" />
     <Compile Include="FrTrainDevice.cs" />
+    <Compile Include="TrainHandleManager.cs" />
   </ItemGroup>
 </Project>
