@@ -63,5 +63,9 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="FrTrainSys.cs" />
+    <Compile Include="Vacma.cs" />
+    <Compile Include="TrainEvent.cs" />
+    <Compile Include="TrainSoundManager.cs" />
+    <Compile Include="FrTrainDevice.cs" />
   </ItemGroup>
 </Project>
