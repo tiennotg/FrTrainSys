@@ -13,6 +13,14 @@ namespace FrTrainSys
 		public override void elapse (OpenBveApi.Runtime.ElapseData data)
 		{
 		}
+
+		public override void reset ()
+		{
+		}
+
+		public override void trainEvent (TrainEvent _event)
+		{
+		}
 	}
 }
 
