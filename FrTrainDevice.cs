@@ -1,4 +1,6 @@
 using System;
+using OpenBveApi;
+
 namespace FrTrainSys
 {
 	abstract public class FrTrainDevice
@@ -12,6 +14,8 @@ namespace FrTrainSys
 			this.soundManager = soundManager;
 			this.handleManager = handleManager;
 		}
+
+		public abstract void elapse (OpenBveApi.Runtime.ElapseData data);
 	}
 }
 
