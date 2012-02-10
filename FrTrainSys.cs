@@ -38,6 +38,7 @@ namespace FrTrainSys {
 		/// <summary>Is called every frame.</summary>
 		/// <param name="data">The data passed to the plugin.</param>
 		public void Elapse(ElapseData data) {
+			closedSignalDevice.elapse(data);
 		}
 		
 		/// <summary>Is called when the driver changes the reverser.</summary>
@@ -58,6 +59,7 @@ namespace FrTrainSys {
 		/// <summary>Is called when a virtual key is pressed.</summary>
 		/// <param name="key">The virtual key that was pressed.</param>
 		public void KeyDown(VirtualKeys key) {
+			closedSignalDevice.trainEvent(new TrainEvent(EventTypes.EventTypeKeyDown, key));
 		}
 		
 		/// <summary>Is called when a virtual key is released.</summary>
