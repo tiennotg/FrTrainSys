@@ -17,6 +17,11 @@ namespace FrTrainSys
 			soundManager.playSoundOnce((int) TrainSoundManager.SoundIndex.Beep);
 		}
 
+		private void crossingClosedSignal ()
+		{
+			this.beep();
+		}
+
 		public override void elapse (OpenBveApi.Runtime.ElapseData data)
 		{
 		}
@@ -33,11 +38,10 @@ namespace FrTrainSys
 
 				/* The first condition ensures that the train is really crossing a signal, and
 				 * that is not an other signal whose aspect is changing. */
+
 				if (System.Math.Abs(signal[0].Distance) < signalCrossingDistance
 				    && signal[0].Aspect <= signalAspectForConsideringClosed)
-				{
-					this.beep();
-				}
+					this.crossingClosedSignal();
 			}
 		}
 	}
