@@ -12,21 +12,21 @@ namespace FrTrainSys
 
 	public class TrainEvent
 	{
-		private int eventType;
+		private EventTypes eventType;
 		private object data;
 
-		public TrainEvent (int eventType, object data)
+		public TrainEvent (EventTypes eventType, object data)
 		{
 			this.eventType = eventType;
 			this.data = data;
 		}
 
-		public int getEventType ()
+		public EventTypes getEventType ()
 		{
 			return this.eventType;
 		}
 
-		public void setEventType (int eventType)
+		public void setEventType (EventTypes eventType)
 		{
 			this.eventType = eventType;
 		}
