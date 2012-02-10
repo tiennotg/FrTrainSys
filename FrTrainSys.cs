@@ -6,12 +6,18 @@ namespace FrTrainSys {
 	public class FrTrainSys : IRuntime {
 
 		private TrainSoundManager soundManager;
+		private TrainHandleManager handleManager;
+
+		private ClosedSignal closedSignalDevice;
 		
 		/// <summary>Is called when the plugin is loaded.</summary>
 		/// <param name="properties">The properties supplied to the plugin on loading.</param>
 		/// <returns>Whether the plugin was loaded successfully.</returns>
 		public bool Load(LoadProperties properties) {
 			soundManager = new TrainSoundManager(properties.PlaySound);
+			handleManager = new TrainHandleManager();
+
+			closedSignalDevice = new ClosedSignal(soundManager,handleManager);
 			return true;
 		}
 		
@@ -74,6 +80,7 @@ namespace FrTrainSys {
 		/// <param name="data">Signal information per section. In the array, index 0 is the current section, index 1 the upcoming section, and so on.</param>
 		/// <remarks>The signal array is guaranteed to have at least one element. When accessing elements other than index 0, you must check the bounds of the array first.</remarks>
 		public void SetSignal(SignalData[] signal) {
+			closedSignalDevice.trainEvent(new TrainEvent(EventTypes.EventTypeChangeSignalAspect, signal));
 		}
 		
 		/// <summary>Is called when the train passes a beacon.</summary>
