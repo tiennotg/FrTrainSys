@@ -29,6 +29,12 @@ namespace FrTrainSys
 			handles.BrakeNotch = specs.BrakeNotches+1;
 			handles.PowerNotch = 0;
 		}
+		
+		public void removeBrake ()
+		{
+			applyHandles = true;
+			handles.BrakeNotch = 0;
+		}
 	}
 }
 
