@@ -35,6 +35,18 @@ namespace FrTrainSys
 			applyHandles = true;
 			handles.BrakeNotch = 0;
 		}
+
+		public void setBrake (int brake)
+		{
+			applyHandles = true;
+			handles.BrakeNotch = brake;
+		}
+		
+		public void setPower (int power)
+		{
+			applyHandles = true;
+			handles.PowerNotch = power;
+		}
 	}
 }
 
