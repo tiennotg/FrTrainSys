@@ -7,6 +7,7 @@ namespace FrTrainSys {
 
 		private TrainSoundManager soundManager;
 		private TrainHandleManager handleManager;
+		private VehicleSpecs trainSpecs;
 
 		private ClosedSignal closedSignalDevice;
 		
@@ -15,9 +16,6 @@ namespace FrTrainSys {
 		/// <returns>Whether the plugin was loaded successfully.</returns>
 		public bool Load(LoadProperties properties) {
 			soundManager = new TrainSoundManager(properties.PlaySound);
-			handleManager = new TrainHandleManager();
-
-			closedSignalDevice = new ClosedSignal(soundManager,handleManager);
 			return true;
 		}
 		
@@ -28,17 +26,22 @@ namespace FrTrainSys {
 		/// <summary>Is called after loading to inform the plugin about the specifications of the train.</summary>
 		/// <param name="specs">The specifications of the train.</param>
 		public void SetVehicleSpecs(VehicleSpecs specs) {
+			trainSpecs = specs;
 		}
 		
 		/// <summary>Is called when the plugin should initialize or reinitialize.</summary>
 		/// <param name="mode">The mode of initialization.</param>
 		public void Initialize(InitializationModes mode) {
+			handleManager = new TrainHandleManager(trainSpecs);
+
+			closedSignalDevice = new ClosedSignal(soundManager,handleManager);
 		}
 		
 		/// <summary>Is called every frame.</summary>
 		/// <param name="data">The data passed to the plugin.</param>
 		public void Elapse(ElapseData data) {
 			closedSignalDevice.elapse(data);
+			handleManager.elapse(ref data);
 		}
 		
 		/// <summary>Is called when the driver changes the reverser.</summary>
