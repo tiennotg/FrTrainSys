@@ -19,9 +19,9 @@ namespace FrTrainSys
 			this.playSound = playSound;
 		}
 
-		public void playSoundOnce (int index)
+		public void playSoundOnce (SoundIndex index)
 		{
-			playSound(index,volume,pitch,false);
+			playSound((int) index,volume,pitch,false);
 		}
 	}
 }
