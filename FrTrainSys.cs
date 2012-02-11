@@ -7,6 +7,7 @@ namespace FrTrainSys {
 
 		private TrainSoundManager soundManager;
 		private TrainHandleManager handleManager;
+		private TrainControlManager cabControlManager;
 		private VehicleSpecs trainSpecs;
 
 		private ClosedSignal closedSignalDevice;
@@ -16,6 +17,7 @@ namespace FrTrainSys {
 		/// <returns>Whether the plugin was loaded successfully.</returns>
 		public bool Load(LoadProperties properties) {
 			soundManager = new TrainSoundManager(properties.PlaySound);
+			cabControlManager = new TrainControlManager(ref properties);
 			return true;
 		}
 		
@@ -42,6 +44,7 @@ namespace FrTrainSys {
 		public void Elapse(ElapseData data) {
 			closedSignalDevice.elapse(data);
 			handleManager.elapse(ref data);
+			cabControlManager.elapse(data);
 		}
 		
 		/// <summary>Is called when the driver changes the reverser.</summary>
