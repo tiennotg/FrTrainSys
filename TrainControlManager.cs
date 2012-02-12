@@ -26,6 +26,16 @@ namespace FrTrainSys
 		{
 			globalTime = data.TotalTime;
 		}
+		
+		public int getState (int control)
+		{
+			return panel[control];
+		}
+		
+		public void setState (int control, int state)
+		{
+			panel[control] = state;
+		}
 	}
 }
 
