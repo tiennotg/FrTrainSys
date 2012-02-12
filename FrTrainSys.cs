@@ -36,7 +36,7 @@ namespace FrTrainSys {
 		public void Initialize(InitializationModes mode) {
 			handleManager = new TrainHandleManager(trainSpecs);
 
-			closedSignalDevice = new ClosedSignal(soundManager,handleManager);
+			closedSignalDevice = new ClosedSignal(soundManager,handleManager, cabControlManager);
 		}
 		
 		/// <summary>Is called every frame.</summary>
