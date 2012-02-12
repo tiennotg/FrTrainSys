@@ -69,5 +69,6 @@
     <Compile Include="FrTrainDevice.cs" />
     <Compile Include="TrainHandleManager.cs" />
     <Compile Include="ClosedSignal.cs" />
+    <Compile Include="TrainControlManager.cs" />
   </ItemGroup>
 </Project>
