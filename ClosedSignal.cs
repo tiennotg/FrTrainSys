@@ -14,7 +14,8 @@ namespace FrTrainSys
 		private OpenBveApi.Runtime.Time time;
 
 		public ClosedSignal (TrainSoundManager soundManager,
-		                     TrainHandleManager handleManager): base(soundManager,handleManager)
+		                     TrainHandleManager handleManager,
+		                     TrainControlManager controlManager): base(soundManager,handleManager,controlManager)
 		{
 			globalTime = new OpenBveApi.Runtime.Time(0);
 			time = new OpenBveApi.Runtime.Time(0);
@@ -30,6 +31,7 @@ namespace FrTrainSys
 		{
 			this.beep();
 			closedSignal = true;
+			controlManager.startBlinking(cabControls.LSSF);
 			time = globalTime;
 		}
 
@@ -55,16 +57,30 @@ namespace FrTrainSys
 				/* The first condition ensures that the train is really crossing a signal, and
 				 * that is not an other signal whose aspect is changing. */
 
-				if (System.Math.Abs(signal[0].Distance) < signalCrossingDistance
-				    && signal[0].Aspect <= signalAspectForConsideringClosed)
-					this.crossingClosedSignal();
+				if (System.Math.Abs(signal[0].Distance) < signalCrossingDistance)
+				{
+					if (signal[0].Aspect <= signalAspectForConsideringClosed)
+						this.crossingClosedSignal();
+					else
+					{
+						controlManager.stopBlinking(cabControls.LSSF);
+						controlManager.setState(cabControls.LSSF, 0);
+					}
+				}
 			}
 
 			if (_event.getEventType() == EventTypes.EventTypeKeyDown)
 			{
 				OpenBveApi.Runtime.VirtualKeys key = (OpenBveApi.Runtime.VirtualKeys) _event.getEventData();
 				if (key == ackKey)
+				{
+					if (closedSignal)
+					{
+						controlManager.stopBlinking(cabControls.LSSF);
+						controlManager.setState(cabControls.LSSF, 1);
+					}
 					this.reset();
+				}
 			}
 		}
 	}
