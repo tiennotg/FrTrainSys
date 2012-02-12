@@ -70,5 +70,6 @@
     <Compile Include="TrainHandleManager.cs" />
     <Compile Include="ClosedSignal.cs" />
     <Compile Include="TrainControlManager.cs" />
+    <Compile Include="Beacons.cs" />
   </ItemGroup>
 </Project>
