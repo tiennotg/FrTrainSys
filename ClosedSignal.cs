@@ -68,6 +68,14 @@ namespace FrTrainSys
 					}
 				}
 			}
+			
+			if (_event.getEventType() == EventTypes.EventTypeGetBeacon)
+			{
+				OpenBveApi.Runtime.BeaconData beacon = (OpenBveApi.Runtime.BeaconData) _event.getEventData();
+				
+				if (beacon.Type == Beacons.RepeatedSignal)
+					this.crossingClosedSignal();
+			}
 
 			if (_event.getEventType() == EventTypes.EventTypeKeyDown)
 			{
