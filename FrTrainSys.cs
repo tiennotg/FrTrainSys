@@ -94,6 +94,7 @@ namespace FrTrainSys {
 		/// <summary>Is called when the train passes a beacon.</summary>
 		/// <param name="beacon">The beacon data.</param>
 		public void SetBeacon(BeaconData beacon) {
+			closedSignalDevice.trainEvent(new TrainEvent(EventTypes.EventTypeGetBeacon, beacon));
 		}
 		
 		/// <summary>Is called when the plugin should perform the AI.</summary>
