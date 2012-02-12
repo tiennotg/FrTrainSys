@@ -7,12 +7,15 @@ namespace FrTrainSys
 	{
 		protected TrainSoundManager soundManager;
 		protected TrainHandleManager handleManager;
+		protected TrainControlManager controlManager;
 
 		public FrTrainDevice (TrainSoundManager soundManager,
-		                      TrainHandleManager handleManager)
+		                      TrainHandleManager handleManager,
+		                      TrainControlManager controlManager)
 		{
 			this.soundManager = soundManager;
 			this.handleManager = handleManager;
+			this.controlManager = controlManager;
 		}
 
 		public abstract void elapse (OpenBveApi.Runtime.ElapseData data);
