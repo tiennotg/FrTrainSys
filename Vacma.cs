@@ -28,6 +28,14 @@ namespace FrTrainSys
 
 		public override void trainEvent (TrainEvent _event)
 		{
+			if (_event.getEventType() == EventTypes.EventTypeBlowHorn ||
+			    _event.getEventType() == EventTypes.EventTypeChangeBrake ||
+			    _event.getEventType() == EventTypes.EventTypeChangeDoors ||
+			    _event.getEventType() == EventTypes.EventTypeChangePower ||
+			    _event.getEventType() == EventTypes.EventTypeSwitchReverser)
+			{
+				this.reset();
+			}
 		}
 	}
 }
