@@ -24,6 +24,7 @@ namespace FrTrainSys
 
 		public override void reset ()
 		{
+			time = globalTime;
 		}
 
 		public override void trainEvent (TrainEvent _event)
