@@ -1,16 +1,16 @@
 ﻿<Properties>
   <AuthorInfo Name="Guilhem Tiennot" Email="guilhem.tiennot@gmail.com" Copyright="GNU General Public License 2" ctype="AuthorInformation" />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" ctype="Workspace" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="ClosedSignal.cs" ctype="Workbench">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Properties/AssemblyInfo.cs" ctype="Workbench">
     <Files>
       <File FileName="Properties/AssemblyInfo.cs" Line="15" Column="35" />
       <File FileName="FrTrainSys.cs" Line="97" Column="89" />
-      <File FileName="Vacma.cs" Line="10" Column="102" />
+      <File FileName="Vacma.cs" Line="12" Column="25" />
       <File FileName="TrainEvent.cs" Line="9" Column="16" />
-      <File FileName="TrainSoundManager.cs" Line="19" Column="31" />
+      <File FileName="TrainSoundManager.cs" Line="40" Column="40" />
       <File FileName="FrTrainDevice.cs" Line="18" Column="41" />
-      <File FileName="TrainHandleManager.cs" Line="24" Column="4" />
-      <File FileName="ClosedSignal.cs" Line="76" Column="47" />
+      <File FileName="TrainHandleManager.cs" Line="37" Column="27" />
+      <File FileName="ClosedSignal.cs" Line="35" Column="22" />
       <File FileName="TrainControlManager.cs" Line="69" Column="36" />
       <File FileName="Beacons.cs" Line="8" Column="41" />
     </Files>
