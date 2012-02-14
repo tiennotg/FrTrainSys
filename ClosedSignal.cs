@@ -24,7 +24,7 @@ namespace FrTrainSys
 
 		private void beep ()
 		{
-			soundManager.playSoundOnce(TrainSoundManager.SoundIndex.Beep);
+			soundManager.playSoundOnce(SoundIndex.Beep);
 		}
 
 		private void crossingClosedSignal ()
