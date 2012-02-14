@@ -11,6 +11,7 @@ namespace FrTrainSys {
 		private VehicleSpecs trainSpecs;
 
 		private ClosedSignal closedSignalDevice;
+		private Vacma vacma;
 		
 		/// <summary>Is called when the plugin is loaded.</summary>
 		/// <param name="properties">The properties supplied to the plugin on loading.</param>
@@ -37,12 +38,14 @@ namespace FrTrainSys {
 			handleManager = new TrainHandleManager(trainSpecs);
 
 			closedSignalDevice = new ClosedSignal(soundManager,handleManager, cabControlManager);
+			vacma = new Vacma(soundManager,handleManager, cabControlManager);
 		}
 		
 		/// <summary>Is called every frame.</summary>
 		/// <param name="data">The data passed to the plugin.</param>
 		public void Elapse(ElapseData data) {
 			closedSignalDevice.elapse(data);
+			vacma.elapse(data);
 			handleManager.elapse(ref data);
 			cabControlManager.elapse(data);
 		}
@@ -50,38 +53,45 @@ namespace FrTrainSys {
 		/// <summary>Is called when the driver changes the reverser.</summary>
 		/// <param name="reverser">The new reverser position.</param>
 		public void SetReverser(int reverser) {
+			vacma.trainEvent(new TrainEvent(EventTypes.EventTypeSwitchReverser, reverser));
 		}
 		
 		/// <summary>Is called when the driver changes the power notch.</summary>
 		/// <param name="powerNotch">The new power notch.</param>
 		public void SetPower(int powerNotch) {
+			vacma.trainEvent(new TrainEvent(EventTypes.EventTypeChangePower, powerNotch));
 		}
 		
 		/// <summary>Is called when the driver changes the brake notch.</summary>
 		/// <param name="brakeNotch">The new brake notch.</param>
 		public void SetBrake(int brakeNotch) {
+			vacma.trainEvent(new TrainEvent(EventTypes.EventTypeChangeBrake, brakeNotch));
 		}
 		
 		/// <summary>Is called when a virtual key is pressed.</summary>
 		/// <param name="key">The virtual key that was pressed.</param>
 		public void KeyDown(VirtualKeys key) {
 			closedSignalDevice.trainEvent(new TrainEvent(EventTypes.EventTypeKeyDown, key));
+			vacma.trainEvent(new TrainEvent(EventTypes.EventTypeKeyDown, key));
 		}
 		
 		/// <summary>Is called when a virtual key is released.</summary>
 		/// <param name="key">The virtual key that was released.</param>
 		public void KeyUp(VirtualKeys key) {
+			vacma.trainEvent(new TrainEvent(EventTypes.EventTypeKeyUp, key));
 		}
 		
 		/// <summary>Is called when a horn is played or when the music horn is stopped.</summary>
 		/// <param name="type">The type of horn.</param>
 		public void HornBlow(HornTypes type) {
+			vacma.trainEvent(new TrainEvent(EventTypes.EventTypeBlowHorn, type));
 		}
 		
 		/// <summary>Is called when the state of the doors changes.</summary>
 		/// <param name="oldState">The old state of the doors.</param>
 		/// <param name="newState">The new state of the doors.</param>
 		public void DoorChange(DoorStates oldState, DoorStates newState) {
+			vacma.trainEvent(new TrainEvent(EventTypes.EventTypeChangeDoors, newState));
 		}
 		
 		/// <summary>Is called when the aspect in the current or in any of the upcoming sections changes, or when passing section boundaries.</summary>
