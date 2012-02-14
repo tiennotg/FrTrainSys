@@ -6,6 +6,7 @@ namespace FrTrainSys
 		private OpenBveApi.Runtime.VehicleSpecs specs;
 		private OpenBveApi.Runtime.Handles handles;
 		private bool applyHandles;
+		private bool emergencyBrake;
 
 		public TrainHandleManager (OpenBveApi.Runtime.VehicleSpecs specs)
 		{
@@ -16,7 +17,7 @@ namespace FrTrainSys
 
 		public void elapse (ref OpenBveApi.Runtime.ElapseData data)
 		{
-			if (applyHandles)
+			if (applyHandles || emergencyBrake)
 			{
 				data.Handles = this.handles;
 				applyHandles = false;
@@ -25,7 +26,7 @@ namespace FrTrainSys
 
 		public void applyEmergencyBrake ()
 		{
-			applyHandles = true;
+			emergencyBrake = true;
 			handles.BrakeNotch = specs.BrakeNotches+1;
 			handles.PowerNotch = 0;
 		}
@@ -33,6 +34,7 @@ namespace FrTrainSys
 		public void removeBrake ()
 		{
 			applyHandles = true;
+			emergencyBrake = false;
 			handles.BrakeNotch = 0;
 		}
 
