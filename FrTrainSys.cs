@@ -47,6 +47,7 @@ namespace FrTrainSys {
 			closedSignalDevice.elapse(data);
 			vacma.elapse(data);
 			handleManager.elapse(ref data);
+			soundManager.elapse(data);
 			cabControlManager.elapse(data);
 		}
 		
