@@ -8,7 +8,9 @@ namespace FrTrainSys
 	{
 		public static int count = 256;
 		
-		public static int LSSF = 10;
+		public static int LSSF = 1;
+		public static int YellowKVB = 10;
+		public static int GreenKVB = 11;
 	}
 	
 	public class TrainControlManager
