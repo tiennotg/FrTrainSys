@@ -1,18 +1,19 @@
 ﻿<Properties>
   <AuthorInfo Name="Guilhem Tiennot" Email="guilhem.tiennot@gmail.com" Copyright="GNU General Public License 2" ctype="AuthorInformation" />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" ctype="Workspace" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="TrainSoundManager.cs" ctype="Workbench">
+  <MonoDevelop.Ide.Workbench ActiveDocument="KVB.cs" ctype="Workbench">
     <Files>
       <File FileName="Properties/AssemblyInfo.cs" Line="15" Column="35" />
-      <File FileName="FrTrainSys.cs" Line="50" Column="30" />
-      <File FileName="Vacma.cs" Line="12" Column="25" />
+      <File FileName="FrTrainSys.cs" Line="73" Column="4" />
+      <File FileName="Vacma.cs" Line="19" Column="17" />
       <File FileName="TrainEvent.cs" Line="9" Column="16" />
       <File FileName="TrainSoundManager.cs" Line="38" Column="5" />
-      <File FileName="FrTrainDevice.cs" Line="18" Column="41" />
+      <File FileName="FrTrainDevice.cs" Line="21" Column="1" />
       <File FileName="TrainHandleManager.cs" Line="37" Column="27" />
       <File FileName="ClosedSignal.cs" Line="35" Column="22" />
-      <File FileName="TrainControlManager.cs" Line="69" Column="36" />
+      <File FileName="TrainControlManager.cs" Line="13" Column="35" />
       <File FileName="Beacons.cs" Line="8" Column="41" />
+      <File FileName="KVB.cs" Line="38" Column="5" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
