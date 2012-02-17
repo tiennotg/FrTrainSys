@@ -12,6 +12,7 @@ namespace FrTrainSys {
 
 		private ClosedSignal closedSignalDevice;
 		private Vacma vacma;
+		private KVB speedControl;
 		
 		/// <summary>Is called when the plugin is loaded.</summary>
 		/// <param name="properties">The properties supplied to the plugin on loading.</param>
@@ -39,6 +40,7 @@ namespace FrTrainSys {
 
 			closedSignalDevice = new ClosedSignal(soundManager,handleManager, cabControlManager);
 			vacma = new Vacma(soundManager,handleManager, cabControlManager);
+			speedControl = new KVB(soundManager,handleManager,cabControlManager);
 		}
 		
 		/// <summary>Is called every frame.</summary>
@@ -46,6 +48,7 @@ namespace FrTrainSys {
 		public void Elapse(ElapseData data) {
 			closedSignalDevice.elapse(data);
 			vacma.elapse(data);
+			speedControl.elapse(data);
 			handleManager.elapse(ref data);
 			soundManager.elapse(data);
 			cabControlManager.elapse(data);
@@ -100,6 +103,7 @@ namespace FrTrainSys {
 		/// <remarks>The signal array is guaranteed to have at least one element. When accessing elements other than index 0, you must check the bounds of the array first.</remarks>
 		public void SetSignal(SignalData[] signal) {
 			closedSignalDevice.trainEvent(new TrainEvent(EventTypes.EventTypeChangeSignalAspect, signal));
+			speedControl.trainEvent(new TrainEvent(EventTypes.EventTypeChangeSignalAspect, signal));
 		}
 		
 		/// <summary>Is called when the train passes a beacon.</summary>
