@@ -10,8 +10,11 @@ namespace FrTrainSys
 	
 	public class KVB: FrTrainDevice
 	{
+		private bool enabled;
 		private const double firstMargin = 5.0;
 		private const double secondMargin = 10.0;
+		private const int KvbEnable = 0;
+		private const int KvbDisable = -1;
 		
 		private Speed newSpeedLimit;
 		private int targetDistance;
@@ -48,6 +51,7 @@ namespace FrTrainSys
 			beepBeep = -1;
 			horn = -1;
 			newSpeedLimit = new Speed(-1);
+			enabled = false;
 			reset();
 		}
 		
@@ -58,19 +62,22 @@ namespace FrTrainSys
 		
 		public override void elapse (OpenBveApi.Runtime.ElapseData data)
 		{
-			Speed limit = speedLimiter.getCurrentSpeedLimit();
-			
-			if (data.Vehicle.Speed.KilometersPerHour == 0)
-				stopLoopSound(ref horn);
-			else if (data.Vehicle.Speed.KilometersPerHour > limit.KilometersPerHour + firstMargin)
+			if (enabled)
 			{
-				startLoopSound(ref beepBeep, SoundIndex.KvbOverSpeed);
+				Speed limit = speedLimiter.getCurrentSpeedLimit();
+			
+				if (data.Vehicle.Speed.KilometersPerHour == 0)
+					stopLoopSound(ref horn);
+				else if (data.Vehicle.Speed.KilometersPerHour > limit.KilometersPerHour + firstMargin)
+				{
+					startLoopSound(ref beepBeep, SoundIndex.KvbOverSpeed);
 				
-				if (data.Vehicle.Speed.KilometersPerHour > limit.KilometersPerHour + secondMargin)
-					stopTrain();
+					if (data.Vehicle.Speed.KilometersPerHour > limit.KilometersPerHour + secondMargin)
+						stopTrain();
+				}
+				else
+					stopLoopSound(ref beepBeep);
 			}
-			else
-				stopLoopSound(ref beepBeep);
 		}
 		
 		public override void reset ()
@@ -99,7 +106,7 @@ namespace FrTrainSys
 					{
 						speedLimiter.setTargetSpeed(new Speed(0), (int) Math.Round(beacon.Signal.Distance));
 						controlManager.setState(cabControls.GreenKVB, (int) GreenKvbAspects.none);
-						if (beacon.Optional > 0)
+						if (beacon.Optional >= 0)
 							controlManager.setState(cabControls.YellowKVB, (int) YellowKvbAspects.double0);
 						else
 							controlManager.setState(cabControls.YellowKVB, (int) YellowKvbAspects.triple0);
@@ -111,10 +118,18 @@ namespace FrTrainSys
 					}
 				}
 				
-				if (beacon.Type == (int) Beacons.SpeedLimit)
+				if (beacon.Type == Beacons.KvbControl)
+				{
+					if (beacon.Optional == KvbEnable)
+						enabled = true;
+					else if (beacon.Optional == KvbDisable)
+						enabled = false;
+				}
+				
+				if (beacon.Type == Beacons.SpeedLimit)
 					newSpeedLimit = new Speed(kmhToMs((double) beacon.Optional));
 				
-				if (beacon.Type == (int) Beacons.TargetDistance)
+				if (beacon.Type == Beacons.TargetDistance)
 					targetDistance = beacon.Optional;
 				
 				if (targetDistance != -1 && newSpeedLimit.KilometersPerHour != -1)

@@ -13,8 +13,8 @@
       <File FileName="ClosedSignal.cs" Line="8" Column="57" />
       <File FileName="TrainControlManager.cs" Line="13" Column="35" />
       <File FileName="Beacons.cs" Line="14" Column="3" />
-      <File FileName="KVB.cs" Line="99" Column="7" />
-      <File FileName="SpeedLimitComputer.cs" Line="28" Column="39" />
+      <File FileName="KVB.cs" Line="54" Column="19" />
+      <File FileName="SpeedLimitComputer.cs" Line="29" Column="4" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
