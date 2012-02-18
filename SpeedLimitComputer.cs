@@ -4,7 +4,9 @@ using OpenBveApi.Runtime;
 namespace FrTrainSys
 {
 	public class SpeedLimitComputer
-	{		
+	{
+		private Speed currentSpeedLimit;
+		
 		private Speed maxSpeed;
 		private int trainLength;
 		private double decelCoeff;
@@ -20,11 +22,13 @@ namespace FrTrainSys
 		
 		public void setTargetSpeed (Speed newSpeedLimit, int targetDistance)
 		{
+			if (targetDistance == 0)
+				currentSpeedLimit = newSpeedLimit;
 		}
 		
 		public Speed getCurrentSpeedLimit ()
 		{
-			return new Speed(0);
+			return currentSpeedLimit;
 		}
 	}
 }
