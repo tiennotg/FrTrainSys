@@ -36,23 +36,21 @@ namespace FrTrainSys
 			{
 				if (!hold && (globalTime.Milliseconds - time.Milliseconds) > delayBeforeBreaking)
 				{
-					if (vacmaHorn == -1)
-						vacmaHorn = soundManager.startSound(SoundIndex.Vacma);
+					startLoopSound(ref vacmaHorn, SoundIndex.Vacma);
 					if ((globalTime.Milliseconds - time.Milliseconds) > delayBeforeBreaking * 2)
 					{
 						applyBreak = true;
-						soundManager.stopSound(vacmaHorn);
+						stopLoopSound(ref vacmaHorn);
 						handleManager.applyEmergencyBrake();
 					}
 				}
 				else if ((globalTime.Milliseconds - time.Milliseconds) > delayBeforeRinging)
 				{
-					if (vacmaRing == -1)
-						vacmaRing = soundManager.startSound(SoundIndex.VacmaRing);
+					startLoopSound(ref vacmaRing, SoundIndex.VacmaRing);
 					if ((globalTime.Milliseconds - time.Milliseconds) > (delayBeforeRinging + delayBeforeBreaking))
 					{
 						applyBreak = true;
-						soundManager.stopSound(vacmaRing);
+						stopLoopSound(ref vacmaRing);
 						handleManager.applyEmergencyBrake();
 					}
 				}
@@ -65,16 +63,8 @@ namespace FrTrainSys
 		{
 			hold = true;
 			time = globalTime;
-			if (vacmaHorn != -1)
-			{
-				soundManager.stopSound(vacmaHorn);
-				vacmaHorn = -1;
-			}
-			if (vacmaRing != -1)
-			{
-				soundManager.stopSound(vacmaRing);
-				vacmaRing = -1;
-			}
+			stopLoopSound(ref vacmaHorn);
+			stopLoopSound(ref vacmaRing);
 		}
 		
 		public override void reset ()

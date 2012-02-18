@@ -18,6 +18,8 @@ namespace FrTrainSys
 			this.trainLength = trainLength;
 			this.decelCoeff = decelCoeff;
 			this.trainType = trainType;
+			
+			currentSpeedLimit = maxSpeed;
 		}
 		
 		public void setTargetSpeed (Speed newSpeedLimit, int targetDistance)

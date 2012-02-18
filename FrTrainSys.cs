@@ -41,6 +41,8 @@ namespace FrTrainSys {
 			closedSignalDevice = new ClosedSignal(soundManager,handleManager, cabControlManager);
 			vacma = new Vacma(soundManager,handleManager, cabControlManager);
 			speedControl = new KVB(soundManager,handleManager,cabControlManager);
+			
+			speedControl.setParameters(new Speed(33.33), 400, 0.94, TrainTypes.V);
 		}
 		
 		/// <summary>Is called every frame.</summary>
@@ -103,6 +105,7 @@ namespace FrTrainSys {
 		/// <remarks>The signal array is guaranteed to have at least one element. When accessing elements other than index 0, you must check the bounds of the array first.</remarks>
 		public void SetSignal(SignalData[] signal) {
 			closedSignalDevice.trainEvent(new TrainEvent(EventTypes.EventTypeChangeSignalAspect, signal));
+			speedControl.trainEvent(new TrainEvent(EventTypes.EventTypeChangeSignalAspect, signal));
 		}
 		
 		/// <summary>Is called when the train passes a beacon.</summary>
