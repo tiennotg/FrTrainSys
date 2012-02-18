@@ -103,13 +103,13 @@ namespace FrTrainSys {
 		/// <remarks>The signal array is guaranteed to have at least one element. When accessing elements other than index 0, you must check the bounds of the array first.</remarks>
 		public void SetSignal(SignalData[] signal) {
 			closedSignalDevice.trainEvent(new TrainEvent(EventTypes.EventTypeChangeSignalAspect, signal));
-			speedControl.trainEvent(new TrainEvent(EventTypes.EventTypeChangeSignalAspect, signal));
 		}
 		
 		/// <summary>Is called when the train passes a beacon.</summary>
 		/// <param name="beacon">The beacon data.</param>
 		public void SetBeacon(BeaconData beacon) {
 			closedSignalDevice.trainEvent(new TrainEvent(EventTypes.EventTypeGetBeacon, beacon));
+			speedControl.trainEvent(new TrainEvent(EventTypes.EventTypeGetBeacon, beacon));
 		}
 		
 		/// <summary>Is called when the plugin should perform the AI.</summary>
