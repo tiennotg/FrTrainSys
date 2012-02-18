@@ -72,5 +72,6 @@
     <Compile Include="TrainControlManager.cs" />
     <Compile Include="Beacons.cs" />
     <Compile Include="KVB.cs" />
+    <Compile Include="SpeedLimitComputer.cs" />
   </ItemGroup>
 </Project>

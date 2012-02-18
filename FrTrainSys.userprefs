@@ -4,7 +4,7 @@
   <MonoDevelop.Ide.Workbench ActiveDocument="KVB.cs" ctype="Workbench">
     <Files>
       <File FileName="Properties/AssemblyInfo.cs" Line="15" Column="35" />
-      <File FileName="FrTrainSys.cs" Line="73" Column="4" />
+      <File FileName="FrTrainSys.cs" Line="112" Column="89" />
       <File FileName="Vacma.cs" Line="19" Column="17" />
       <File FileName="TrainEvent.cs" Line="9" Column="16" />
       <File FileName="TrainSoundManager.cs" Line="38" Column="5" />
@@ -12,8 +12,9 @@
       <File FileName="TrainHandleManager.cs" Line="37" Column="27" />
       <File FileName="ClosedSignal.cs" Line="35" Column="22" />
       <File FileName="TrainControlManager.cs" Line="13" Column="35" />
-      <File FileName="Beacons.cs" Line="8" Column="41" />
-      <File FileName="KVB.cs" Line="38" Column="5" />
+      <File FileName="Beacons.cs" Line="6" Column="22" />
+      <File FileName="KVB.cs" Line="16" Column="4" />
+      <File FileName="SpeedLimitComputer.cs" Line="19" Column="4" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
