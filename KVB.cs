@@ -3,17 +3,14 @@ using OpenBveApi.Runtime;
 
 namespace FrTrainSys
 {
-	public class KVB: FrTrainDevice
+	public enum TrainTypes
 	{
-		public enum TrainTypes
-		{
-			MA,ME,V
-		}
-		
-		private Speed maxSpeed;
-		private int trainLength;
-		private double decelCoeff;
-		private TrainTypes trainType;
+		MA,ME,V
+	}
+	
+	public class KVB: FrTrainDevice
+	{		
+		private SpeedLimitComputer speedLimiter;
 		
 		private enum GreenKvbAspects
 		{
@@ -34,10 +31,7 @@ namespace FrTrainSys
 		
 		public void setParameters (Speed maxSpeed, int trainLength, double decelCoeff, TrainTypes trainType)
 		{
-			this.maxSpeed = maxSpeed;
-			this.trainLength = trainLength;
-			this.decelCoeff = decelCoeff;
-			this.trainType = trainType;
+			speedLimiter = new SpeedLimitComputer(maxSpeed, trainLength, decelCoeff, trainType);
 		}
 		
 		public override void elapse (OpenBveApi.Runtime.ElapseData data)
