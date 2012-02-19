@@ -92,26 +92,6 @@ namespace FrTrainSys
 			{
 				BeaconData beacon = (BeaconData) _event.getEventData();
 				
-				if (beacon.Type == Beacons.Signal)
-				{
-					if (beacon.Signal.Aspect == 0)
-						stopTrain();
-					else if (beacon.Signal.Aspect <= ClosedSignal.signalAspectForConsideringClosed)
-					{
-						speedLimiter.setTargetSpeed(new Speed(0), (int) Math.Round(beacon.Signal.Distance));
-						controlManager.setState(cabControls.GreenKVB, (int) GreenKvbAspects.none);
-						if (beacon.Optional >= 0)
-							controlManager.setState(cabControls.YellowKVB, (int) YellowKvbAspects.double0);
-						else
-							controlManager.setState(cabControls.YellowKVB, (int) YellowKvbAspects.triple0);
-					}
-					else
-					{
-						controlManager.setState(cabControls.GreenKVB, (int) GreenKvbAspects.running);
-						controlManager.setState(cabControls.YellowKVB, (int) YellowKvbAspects.running);
-					}
-				}
-				
 				if (beacon.Type == Beacons.KvbControl)
 				{
 					if (beacon.Optional == KvbEnable && !enabled)
@@ -129,14 +109,37 @@ namespace FrTrainSys
 					}
 				}
 				
-				if (beacon.Type == Beacons.SpeedLimit)
-					newSpeedLimit = new Speed(kmhToMs((double) beacon.Optional));
+				if (enabled)
+				{
+					if (beacon.Type == Beacons.Signal)
+					{
+						if (beacon.Signal.Aspect == 0)
+							stopTrain();
+						else if (beacon.Signal.Aspect <= ClosedSignal.signalAspectForConsideringClosed)
+						{
+							speedLimiter.setTargetSpeed(new Speed(0), (int) Math.Round(beacon.Signal.Distance));
+							controlManager.setState(cabControls.GreenKVB, (int) GreenKvbAspects.none);
+							if (beacon.Optional >= 0)
+								controlManager.setState(cabControls.YellowKVB, (int) YellowKvbAspects.double0);
+							else
+								controlManager.setState(cabControls.YellowKVB, (int) YellowKvbAspects.triple0);
+						}
+						else
+						{
+							controlManager.setState(cabControls.GreenKVB, (int) GreenKvbAspects.running);
+							controlManager.setState(cabControls.YellowKVB, (int) YellowKvbAspects.running);
+						}
+					}
 				
-				if (beacon.Type == Beacons.TargetDistance)
-					targetDistance = beacon.Optional;
+					if (beacon.Type == Beacons.SpeedLimit)
+						newSpeedLimit = new Speed(kmhToMs((double) beacon.Optional));
 				
-				if (targetDistance != -1 && newSpeedLimit.KilometersPerHour != -1)
-					speedLimiter.setTargetSpeed(newSpeedLimit,targetDistance);
+					if (beacon.Type == Beacons.TargetDistance)
+						targetDistance = beacon.Optional;
+				
+					if (targetDistance != -1 && newSpeedLimit.KilometersPerHour != -1)
+						speedLimiter.setTargetSpeed(newSpeedLimit,targetDistance);
+				}
 			}
 		}
 	}
