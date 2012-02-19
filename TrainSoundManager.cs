@@ -10,8 +10,23 @@ namespace FrTrainSys
 	};
 	
 	public class TrainSoundManager
-	{		
+	{
+		private struct LoopSoundFor
+		{
+			public SoundHandle sound;
+			public int start;
+			public int duration;
+			
+			public LoopSoundFor (SoundHandle s, int startTime, int ms)
+			{
+				sound = s;
+				start = startTime;
+				duration = ms;
+			}
+		}
+		
 		private List<SoundHandle> loopSounds;
+		private List<LoopSoundFor> loopSoundsFor;
 		private SoundIndex lastSoundIndex;
 		private const int soundOnceDelay = 1000;
 		private Time lastSoundTime;
@@ -25,6 +40,7 @@ namespace FrTrainSys
 		{
 			this.playSound = playSound;
 			loopSounds = new List<SoundHandle>();
+			loopSoundsFor = new List<LoopSoundFor>();
 			lastSoundTime = new Time(0);
 			lastSoundIndex = SoundIndex.None;
 		}
@@ -39,9 +55,23 @@ namespace FrTrainSys
 			}
 		}
 		
+		public void playSoundFor (SoundIndex index, int milliseconds)
+		{
+			SoundHandle newSound = playSound((int) index, volume, pitch, true);
+			loopSoundsFor.Add(new LoopSoundFor(newSound, (int) globalTime.Milliseconds, milliseconds));
+		}
+		
 		public void elapse (ElapseData data)
 		{
 			globalTime = data.TotalTime;
+			
+			loopSoundsFor.ForEach(delegate (LoopSoundFor sound) {
+				if (globalTime.Milliseconds - sound.start > sound.duration)
+				{
+					sound.sound.Stop();
+					loopSoundsFor.Remove(sound);
+				}
+			});
 		}
 		
 		public int startSound(SoundIndex index)
