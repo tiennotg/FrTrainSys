@@ -44,15 +44,20 @@ namespace FrTrainSys
 			lastSoundTime = new Time(0);
 			lastSoundIndex = SoundIndex.None;
 		}
-
-		public void playSoundOnce (SoundIndex index)
+		
+		public void playSoundOnce (SoundIndex index, int delayBeforeRepeating)
 		{
-			if (index != lastSoundIndex || (globalTime.Milliseconds -  lastSoundTime.Milliseconds > soundOnceDelay))
+			if (index != lastSoundIndex || (globalTime.Milliseconds -  lastSoundTime.Milliseconds > delayBeforeRepeating))
 			{
 				lastSoundIndex = index;
 				lastSoundTime = globalTime;
 				playSound((int) index,volume,pitch,false);
 			}
+		}
+
+		public void playSoundOnce (SoundIndex index)
+		{
+			this.playSoundOnce(index, soundOnceDelay);
 		}
 		
 		public void playSoundFor (SoundIndex index, int milliseconds)
