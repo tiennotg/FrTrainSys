@@ -17,21 +17,6 @@ namespace FrTrainSys
 			this.handleManager = handleManager;
 			this.controlManager = controlManager;
 		}
-		
-		protected void startLoopSound (ref int id, SoundIndex index)
-		{
-			if (id == -1)
-				id = soundManager.startSound(index);
-		}
-		
-		protected void stopLoopSound (ref int id)
-		{
-			if (id != -1)
-			{
-				soundManager.stopSound(id);
-				id = -1;
-			}
-		}
 
 		public abstract void elapse (OpenBveApi.Runtime.ElapseData data);
 		public abstract void reset ();

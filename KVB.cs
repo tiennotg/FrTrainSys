@@ -21,7 +21,6 @@ namespace FrTrainSys
 		
 		private SpeedLimitComputer speedLimiter;
 		private int beepBeep;
-		private int horn;
 		
 		private enum GreenKvbAspects
 		{
@@ -35,7 +34,7 @@ namespace FrTrainSys
 		
 		private void stopTrain ()
 		{
-			startLoopSound(ref horn, SoundIndex.KvbClosedSignal);
+			soundManager.playSoundFor(SoundIndex.KvbClosedSignal, 5000);
 			handleManager.applyEmergencyBrake();
 		}
 		
@@ -49,10 +48,8 @@ namespace FrTrainSys
 		            TrainControlManager controlManager): base(soundManager, handleManager, controlManager)
 		{
 			beepBeep = -1;
-			horn = -1;
-			newSpeedLimit = new Speed(-1);
 			enabled = false;
-			reset();
+			newSpeedLimit = new Speed(-1);
 		}
 		
 		public void setParameters (Speed maxSpeed, int trainLength, double decelCoeff, TrainTypes trainType)
@@ -66,17 +63,15 @@ namespace FrTrainSys
 			{
 				Speed limit = speedLimiter.getCurrentSpeedLimit();
 			
-				if (data.Vehicle.Speed.KilometersPerHour == 0)
-					stopLoopSound(ref horn);
-				else if (data.Vehicle.Speed.KilometersPerHour > limit.KilometersPerHour + firstMargin)
+				if (data.Vehicle.Speed.KilometersPerHour > limit.KilometersPerHour + firstMargin)
 				{
-					startLoopSound(ref beepBeep, SoundIndex.KvbOverSpeed);
+					soundManager.startSound(ref beepBeep, SoundIndex.KvbOverSpeed);
 				
 					if (data.Vehicle.Speed.KilometersPerHour > limit.KilometersPerHour + secondMargin)
 						stopTrain();
 				}
 				else
-					stopLoopSound(ref beepBeep);
+					soundManager.stopSound(ref beepBeep);
 			}
 		}
 		
@@ -85,8 +80,7 @@ namespace FrTrainSys
 			targetDistance = -1;
 			newSpeedLimit = new Speed(-1);
 			
-			stopLoopSound(ref beepBeep);
-			stopLoopSound(ref horn);
+			soundManager.stopSound(ref beepBeep);
 			
 			controlManager.setState(cabControls.GreenKVB, (int) GreenKvbAspects.none);
 			controlManager.setState(cabControls.YellowKVB, (int) YellowKvbAspects.triple0);
@@ -120,10 +114,19 @@ namespace FrTrainSys
 				
 				if (beacon.Type == Beacons.KvbControl)
 				{
-					if (beacon.Optional == KvbEnable)
+					if (beacon.Optional == KvbEnable && !enabled)
+					{
+						controlManager.setState(cabControls.GreenKVB, (int) GreenKvbAspects.running);
+						controlManager.setState(cabControls.YellowKVB, (int) YellowKvbAspects.running);
+						reset();
 						enabled = true;
+					}
 					else if (beacon.Optional == KvbDisable)
+					{
+						controlManager.setState(cabControls.GreenKVB, (int) GreenKvbAspects.none);
+						controlManager.setState(cabControls.YellowKVB, (int) YellowKvbAspects.none);
 						enabled = false;
+					}
 				}
 				
 				if (beacon.Type == Beacons.SpeedLimit)
