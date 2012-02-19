@@ -25,7 +25,13 @@ namespace FrTrainSys
 			}
 		}
 		
-		private List<SoundHandle> loopSounds;
+		private struct LoopSound
+		{
+			public SoundHandle handle;
+			public SoundIndex index;
+		}
+		
+		private List<LoopSound> loopSounds;
 		private List<LoopSoundFor> loopSoundsFor;
 		private SoundIndex lastSoundIndex;
 		private const int soundOnceDelay = 1000;
@@ -39,7 +45,7 @@ namespace FrTrainSys
 		public TrainSoundManager (PlaySoundDelegate playSound)
 		{
 			this.playSound = playSound;
-			loopSounds = new List<SoundHandle>();
+			loopSounds = new List<LoopSound>();
 			loopSoundsFor = new List<LoopSoundFor>();
 			lastSoundTime = new Time(0);
 			lastSoundIndex = SoundIndex.None;
@@ -79,19 +85,27 @@ namespace FrTrainSys
 			});
 		}
 		
-		public int startSound(SoundIndex index)
+		public void startSound(ref int id, SoundIndex index)
 		{
-			SoundHandle handle = this.playSound((int) index,volume,pitch,true);
-			loopSounds.Add(handle);
-			return loopSounds.IndexOf(handle);
+			if (!loopSounds.Exists(delegate (LoopSound sound) {
+				return sound.index == index;
+			}))
+			{
+				LoopSound sound;
+				sound.handle = this.playSound((int) index,volume,pitch,true);
+				sound.index = index;
+				loopSounds.Add(sound);
+				id = loopSounds.IndexOf(sound);
+			}
 		}
 		
-		public void stopSound(int id)
+		public void stopSound(ref int id)
 		{
 			if (id < loopSounds.Count && id >= 0)
 			{
-				loopSounds[id].Stop();
+				loopSounds[id].handle.Stop();
 				loopSounds.RemoveAt(id);
+				id = -1;
 			}
 		}
 	}
