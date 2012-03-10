@@ -61,7 +61,7 @@ namespace FrTrainSys
 		{
 			if (enabled)
 			{
-				Speed limit = speedLimiter.getCurrentSpeedLimit();
+				Speed limit = speedLimiter.getCurrentSpeedLimit(data);
 			
 				if (data.Vehicle.Speed.KilometersPerHour > limit.KilometersPerHour + firstMargin)
 				{
@@ -117,15 +117,21 @@ namespace FrTrainSys
 							stopTrain();
 						else if (beacon.Signal.Aspect <= ClosedSignal.signalAspectForConsideringClosed)
 						{
-							speedLimiter.setTargetSpeed(new Speed(0), (int) Math.Round(beacon.Signal.Distance));
 							controlManager.setState(cabControls.GreenKVB, (int) GreenKvbAspects.none);
 							if (beacon.Optional >= 0)
+							{
+								speedLimiter.startDecelerationControl((int) Math.Round(beacon.Signal.Distance), DecelerationControlType.low);
 								controlManager.setState(cabControls.YellowKVB, (int) YellowKvbAspects.double0);
+							}
 							else
+							{
+								speedLimiter.startDecelerationControl((int) Math.Round(beacon.Signal.Distance), DecelerationControlType.strong);
 								controlManager.setState(cabControls.YellowKVB, (int) YellowKvbAspects.triple0);
+							}
 						}
 						else
 						{
+							speedLimiter.stopDecelerationControl();
 							controlManager.setState(cabControls.GreenKVB, (int) GreenKvbAspects.running);
 							controlManager.setState(cabControls.YellowKVB, (int) YellowKvbAspects.running);
 						}

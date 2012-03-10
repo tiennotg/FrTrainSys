@@ -7,7 +7,7 @@
       <File FileName="Properties/AssemblyInfo.cs" Line="15" Column="35" />
       <File FileName="TrainEvent.cs" Line="9" Column="16" />
       <File FileName="FrTrainDevice.cs" Line="19" Column="4" />
-      <File FileName="ClosedSignal.cs" Line="8" Column="57" />
+      <File FileName="ClosedSignal.cs" Line="8" Column="56" />
       <File FileName="KVB.cs" Line="12" Column="3" />
       <File FileName="SpeedLimitComputer.cs" Line="29" Column="4" />
       <File FileName="Vacma.cs" Line="49" Column="34" />
