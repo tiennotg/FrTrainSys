@@ -5,7 +5,7 @@ namespace FrTrainSys
 	public class ClosedSignal: FrTrainDevice
 	{
 		public const int signalCrossingDistance = 5;
-		public const int signalAspectForConsideringClosed = 3;
+		public const int signalAspectForConsideringClosed = 2;
 		private const OpenBveApi.Runtime.VirtualKeys ackKey = OpenBveApi.Runtime.VirtualKeys.A1;
 		private const int tempo = 2500; /* Time before applying emergency brakes (ms) */
 
