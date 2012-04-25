@@ -42,7 +42,7 @@ namespace FrTrainSys {
 			vacma = new Vacma(soundManager,handleManager, cabControlManager);
 			speedControl = new KVB(soundManager,handleManager,cabControlManager);
 			
-			speedControl.setParameters(new Speed(33.33), 400, 0.94, TrainTypes.V);
+			speedControl.setParameters(new Speed(33.33), 400, 0.8, TrainTypes.V);
 		}
 		
 		/// <summary>Is called every frame.</summary>

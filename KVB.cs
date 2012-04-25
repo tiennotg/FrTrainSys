@@ -16,8 +16,11 @@ namespace FrTrainSys
 		private const int KvbEnable = 0;
 		private const int KvbDisable = -1;
 		
+		private bool signalAspect;
 		private Speed newSpeedLimit;
 		private int targetDistance;
+		private Speed currentSpeed;
+		private int location;
 		
 		private SpeedLimitComputer speedLimiter;
 		private int beepBeep;
@@ -50,6 +53,7 @@ namespace FrTrainSys
 			beepBeep = -1;
 			enabled = false;
 			newSpeedLimit = new Speed(-1);
+			signalAspect = true;
 		}
 		
 		public void setParameters (Speed maxSpeed, int trainLength, double decelCoeff, TrainTypes trainType)
@@ -61,6 +65,8 @@ namespace FrTrainSys
 		{
 			if (enabled)
 			{
+				currentSpeed = data.Vehicle.Speed;
+				location = (int) Math.Round(data.Vehicle.Location);
 				Speed limit = speedLimiter.getCurrentSpeedLimit(data);
 			
 				if (data.Vehicle.Speed.KilometersPerHour > limit.KilometersPerHour + firstMargin)
@@ -79,6 +85,7 @@ namespace FrTrainSys
 		{
 			targetDistance = -1;
 			newSpeedLimit = new Speed(-1);
+			signalAspect = false;
 			
 			soundManager.stopSound(ref beepBeep);
 			
@@ -116,16 +123,24 @@ namespace FrTrainSys
 						if (beacon.Signal.Aspect == 0)
 							stopTrain();
 						else if (beacon.Signal.Aspect <= ClosedSignal.signalAspectForConsideringClosed)
+							signalAspect = false;
+						else
+							signalAspect = true;
+					}
+					
+					if (beacon.Type == Beacons.NextSignal)
+					{
+						if (!signalAspect)
 						{
 							controlManager.setState(cabControls.GreenKVB, (int) GreenKvbAspects.none);
 							if (beacon.Optional >= 0)
 							{
-								speedLimiter.startDecelerationControl((int) Math.Round(beacon.Signal.Distance), DecelerationControlType.low);
+								speedLimiter.startDecelerationControl(currentSpeed, location, location + (int) Math.Round(beacon.Signal.Distance), DecelerationControlType.low);
 								controlManager.setState(cabControls.YellowKVB, (int) YellowKvbAspects.double0);
 							}
 							else
 							{
-								speedLimiter.startDecelerationControl((int) Math.Round(beacon.Signal.Distance), DecelerationControlType.strong);
+								speedLimiter.startDecelerationControl(currentSpeed, location, (int) Math.Round(beacon.Signal.Distance), DecelerationControlType.strong);
 								controlManager.setState(cabControls.YellowKVB, (int) YellowKvbAspects.triple0);
 							}
 						}
@@ -136,7 +151,7 @@ namespace FrTrainSys
 							controlManager.setState(cabControls.YellowKVB, (int) YellowKvbAspects.running);
 						}
 					}
-				
+					
 					if (beacon.Type == Beacons.SpeedLimit)
 						newSpeedLimit = new Speed(kmhToMs((double) beacon.Optional));
 				

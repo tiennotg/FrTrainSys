@@ -17,6 +17,8 @@ namespace FrTrainSys
 		private int newSpeedLimitTargetDistance;
 		
 		private bool decelerationControlEnabled;
+		private Speed decelerationInitSpeed;
+		private int decelerationInitLocation;
 		private DecelerationControlType decelerationType;
 		private int decelerationTargetDistance;
 		
@@ -49,8 +51,10 @@ namespace FrTrainSys
 			}
 		}
 		
-		public void startDecelerationControl (int targetDistance, DecelerationControlType type)
+		public void startDecelerationControl (Speed currentSpeed, int location, int targetDistance, DecelerationControlType type)
 		{
+			decelerationInitSpeed = currentSpeed;
+			decelerationInitLocation = location;
 			decelerationTargetDistance = targetDistance;
 			decelerationType = type;
 			decelerationControlEnabled = true;
@@ -63,7 +67,28 @@ namespace FrTrainSys
 		
 		public Speed getCurrentSpeedLimit (ElapseData data)
 		{
-			return currentSpeedLimit;
+			if (decelerationControlEnabled)
+			{
+				double distance = System.Math.Abs(decelerationTargetDistance - (int) Math.Round(data.Vehicle.Location));
+				double s = (decelerationInitSpeed.MetersPerSecond / System.Math.Sqrt(2 * decelCoeff * decelerationInitLocation)) * System.Math.Sqrt(2 * decelCoeff * distance);
+				
+				if (decelerationType == DecelerationControlType.strong)
+				{
+					if (s > 4.16) /* 15 km/h */
+						return new Speed(s);
+					else
+						return new Speed(4.16);
+				}
+				else
+				{
+					if (s > 8.33) /* 30 km/h */
+						return new Speed(s);
+					else
+						return new Speed(8.33);
+				}
+			}
+			else
+				return currentSpeedLimit;
 		}
 	}
 }
